@@ -1,6 +1,7 @@
 package com.practice.first.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,10 @@ public class MyController {
 	public String home() {
 		return "this is home page";
 	}
+	@GetMapping("/contact")
+	public String contactUs() {
+		return "Please contact us on 9999888777";
+	}
 
 	// to get courses
 	@GetMapping("/courses")
@@ -35,7 +40,7 @@ public class MyController {
 
 //	to get single course
 	@GetMapping("/courses/{courseId}")
-	public Course getCourse(@PathVariable String courseId) {
+	public Optional<Course> getCourse(@PathVariable String courseId) {
 		return this.courseService.getCourse(Long.parseLong(courseId));
 	}
 

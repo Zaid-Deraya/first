@@ -1,13 +1,15 @@
 package com.practice.first.service;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.practice.first.dao.courseDao;
+import com.practice.first.dao.CourseDao;
+//import com.practice.first.dao.courseDao;
 import com.practice.first.entities.Course;
 
 @Service
@@ -28,11 +30,11 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public List<Course> getCourses() {
 
-		return list;
+		return courseDao.findAll();
 	}
 
 	@Override
-	public Course getCourse(long courseId) {
+	public Optional<Course> getCourse(long courseId) {
 		// TODO Auto-generated method stub
 
 //		Course c = null;
@@ -42,11 +44,12 @@ public class CourseServiceImpl implements CourseService {
 //				break;
 //			}
 //		}
-//		return c;
+		return courseDao.findById(courseId);
 	}
 	@Override
 	public Course addCourse(Course course) {
 //		list.add(course);
+		courseDao.save(course);
 		return course;
 	}
 	@Override
@@ -57,12 +60,16 @@ public class CourseServiceImpl implements CourseService {
 //				e.setDescription(course.getDescription());
 //			}
 //		});
+		courseDao.save(course);
 		return course;
 	}
 	
 	@Override
 	public void deleteCourse(long parseLong) {
 //		list= this.list.stream().filter(e->e.getId()!=parseLong).collect(Collectors.toList());
+		
+		Course entity = courseDao.getById(parseLong);
+		courseDao.delete(entity);
 	}
 
 }
