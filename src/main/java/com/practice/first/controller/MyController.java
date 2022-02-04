@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,6 +37,26 @@ public class MyController {
 	@GetMapping("/courses")
 	public List<Course> getCourses() {
 		return this.courseService.getCourses();
+	}
+	
+	@GetMapping("/{field}")
+	public List<Course> findCourseWithSorting(@PathVariable String field){
+		List<Course> allCourses = this.courseService.findCourseWithSorting(field);
+		return  allCourses;
+	}
+	
+	// pagination
+	@GetMapping("/pagination/{offSet}/{pageSize}")
+	public Page<Course> getCourseWithPagination(@PathVariable int offSet, @PathVariable int pageSize){
+		Page<Course> allCourses = this.courseService.findCoursesWithPagination(offSet, pageSize);
+		return allCourses;
+	}
+	
+	@GetMapping("/pagination/{offSet}/{pageSize}/{field}")
+	public Page<Course> getCoursesWithPaginationAndSorting(@PathVariable int offSet, @PathVariable int pageSize, @PathVariable String field)
+	{
+		Page<Course> allCourses=this.courseService.findCoursesWithPaginationAndSorting(offSet, pageSize, field);
+		return allCourses;
 	}
 
 //	to get single course

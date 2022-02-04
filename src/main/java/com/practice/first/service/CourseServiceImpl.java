@@ -6,10 +6,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.practice.first.dao.CourseDao;
-//import com.practice.first.dao.courseDao;
+//import com.practice.first.dao.courseDao; 
 import com.practice.first.entities.Course;
 
 @Service
@@ -31,6 +35,20 @@ public class CourseServiceImpl implements CourseService {
 	public List<Course> getCourses() {
 
 		return courseDao.findAll();
+	}
+	
+	public List<Course> findCourseWithSorting(String field){
+		return courseDao.findAll(Sort.by(Direction.ASC, field));
+	}
+		public Page<Course> findCoursesWithPagination(int offSet, int pageSize){
+		Page<Course> courses= courseDao.findAll(PageRequest.of(offSet, pageSize));
+	return courses;
+	}
+	
+	public Page<Course> findCoursesWithPaginationAndSorting(int offset, int pageSize, String field){
+		Page<Course> courses= courseDao.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(field)));	
+				return courses;
+				
 	}
 
 	@Override
