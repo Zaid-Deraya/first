@@ -39,20 +39,20 @@ public class MyController {
 		return this.courseService.getCourses();
 	}
 	
-	@GetMapping("/{field}")
+	@GetMapping("/course/{field}")
 	public List<Course> findCourseWithSorting(@PathVariable String field){
 		List<Course> allCourses = this.courseService.findCourseWithSorting(field);
 		return  allCourses;
 	}
 	
 	// pagination
-	@GetMapping("/pagination/{offSet}/{pageSize}")
+	@GetMapping("courses/pagination/{offSet}/{pageSize}")
 	public Page<Course> getCourseWithPagination(@PathVariable int offSet, @PathVariable int pageSize){
 		Page<Course> allCourses = this.courseService.findCoursesWithPagination(offSet, pageSize);
 		return allCourses;
 	}
 	
-	@GetMapping("/pagination/{offSet}/{pageSize}/{field}")
+	@GetMapping("courses/pagination/{offSet}/{pageSize}/{field}")
 	public Page<Course> getCoursesWithPaginationAndSorting(@PathVariable int offSet, @PathVariable int pageSize, @PathVariable String field)
 	{
 		Page<Course> allCourses=this.courseService.findCoursesWithPaginationAndSorting(offSet, pageSize, field);
